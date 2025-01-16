@@ -29,11 +29,6 @@ export const CustomInput = ({ value, rules, label, showError = true, onChange, p
     };
   }, []);
 
-  useEffect(() => {
-    console.log(value)
-  }, [value])
-  
-
   return (
     <div className="input-wrapper">
       <label>{label}</label>

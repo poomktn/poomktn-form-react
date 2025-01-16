@@ -18,7 +18,6 @@ export function useForm() {
     let errorText = '';
     let isValid = true;
     inputsRef.current.forEach((input) => {
-      console.log(input)
       let { valid, errText } = input.inputValidate();
       if (!valid) {
         isValid = false;
