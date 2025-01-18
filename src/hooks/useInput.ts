@@ -17,7 +17,6 @@ export function useInput(props: InputProps) {
 
   useEffect(() => {
     modelValueRef.current = props.modelValue
-    inputValidate()
   }, [props.modelValue])
 
   // Function to reset the validation errors

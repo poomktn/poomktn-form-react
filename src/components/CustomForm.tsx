@@ -28,7 +28,7 @@ export type FormContextProps = {
   unregister: (input: InputValidateProps) => void
 }
 
-export const FormContext = createContext<FormContextProps>({} as FormContextProps)
+export const FormContext = createContext<FormContextProps>(null as unknown as FormContextProps)
 
 export const CustomForm = forwardRef<FormRefProps, formProps>(function CustomForm(
   { children, className }: formProps,

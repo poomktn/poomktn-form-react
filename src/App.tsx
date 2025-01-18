@@ -18,7 +18,7 @@ function App() {
   }
 
   const submitForm = () => {
-    if(formRef?.current) {
+    if (formRef?.current) {
       let { isValid, errorText } = formRef?.current.validate();
       if (isValid) {
         console.log('form is right!');
@@ -31,14 +31,14 @@ function App() {
   };
 
   const resetAllForm = () => {
-    if(formRef?.current) {
+    if (formRef?.current) {
       formRef?.current.reset();
     }
     setErrMsg('')
   };
 
   const resetErrorForm = () => {
-    if(formRef?.current) {
+    if (formRef?.current) {
       formRef?.current.resetValidate();
     }
     setErrMsg('')
@@ -70,6 +70,13 @@ function App() {
           <button type="button" onClick={resetErrorForm}>Reset</button>
         </div >
       </CustomForm >
+      <CustomInput
+        label='name'
+        value={info.name}
+        rules={[v => Boolean(v) || 'Name is required', v => (v as string).length <= 10 || 'Max 10 characters']}
+        onChange={val => setLogin('name', val)}
+        placeholder='name'
+      />
     </div>
   )
 }
