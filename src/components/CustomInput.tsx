@@ -15,7 +15,6 @@ interface InputProps {
 export const CustomInput = ({ value, rules = [], label, showError = true, onChange, placeholder = '' }: InputProps) => {
   const form = useContext(FormContext); // Access form context
   const { errorTexts, inputValidate, resetInputValidate, resetInput, onInput } = useInput({ modelValue: value, rules, onUpdateModelValue: onChange });
-
   // Register input when component is mounted, unregister when it's unmounted
   useEffect(() => {
     if (form) {

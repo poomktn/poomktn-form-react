@@ -1,27 +1,29 @@
 import { RenderValueType, InputProps } from '../types/formType';
-import { useEffect, useRef} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function useInput(props: InputProps) {
-  const errorTexts = useRef<string[]>([]);
+  const [errorTexts, setErrorTexts ] = useState<string[]>([]);
   const modelValueRef = useRef<RenderValueType>(props.modelValue);
 
   const inputValidate = () => {
-    errorTexts.current = props.rules.map((rule) => rule(modelValueRef.current)).filter((result) => result !== true);
+    const errors = props.rules.map((rule) => rule(modelValueRef.current)).filter((result) => result !== true);
+    setErrorTexts(errors)
     let errText = '';
-    let valid = errorTexts.current.length === 0;
+    let valid = errors.length === 0;
     if (!valid) {
-      errText = errorTexts.current[0]; // take the first error message if there are any
+      errText = errors[0]; // take the first error message if there are any
     }
     return { valid, errText };
   };
 
   useEffect(() => {
     modelValueRef.current = props.modelValue
+    inputValidate()
   }, [props.modelValue])
 
   // Function to reset the validation errors
   const resetInputValidate = () => {
-    errorTexts.current = [];
+    setErrorTexts([])
   };
 
   // Function to reset the input value
@@ -36,7 +38,7 @@ export function useInput(props: InputProps) {
   };
 
   return {
-    errorTexts: errorTexts.current,
+    errorTexts,
     inputValidate,
     resetInputValidate,
     resetInput,
