@@ -1,2 +1,2 @@
 export { useForm } from './useForm'
-export { useInput } from './useInput'
+export { useValidate } from './useValidate'
