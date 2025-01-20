@@ -1,7 +1,6 @@
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { CustomForm, CustomInput, FormRefProps } from './components';
 import './App.css';
-import { RenderValueType } from './types/formType';
 
 interface LoginDto {
   email: string
@@ -11,10 +10,13 @@ interface LoginDto {
 function App() {
   const formRef = useRef<FormRefProps>(null)
   const [info, setInfo] = useState<LoginDto>({ email: '', name: '' })
+  const [separate, setSeparate] = useState<string>('')
   const [errMsg, setErrMsg] = useState('')
 
-  function setLogin(key: keyof LoginDto, val: RenderValueType) {
-    setInfo(prev => ({ ...prev, [key]: val }))
+  function setLogin(e: ChangeEvent<HTMLInputElement>) {
+    let { name, value } = e.target
+    console.log(name, value)
+    setInfo(prev => ({ ...prev, [name]: value }))
   }
 
   const submitForm = () => {
@@ -50,17 +52,19 @@ function App() {
         <div>
           <CustomInput
             label='Name'
+            placeholder='name'
             value={info.name}
             rules={[v => Boolean(v) || 'Name is required', v => (v as string).length <= 10 || 'Max 10 characters']}
-            onChange={val => setLogin('name', val)}
-            placeholder='name'
+            name='name'
+            onChange={setLogin}
           />
           <CustomInput
             label='Email'
             value={info.email}
             rules={[v => Boolean(v) || 'Email is required', v => /.+@.+\..+/.test(v as string) || 'Invalid email']}
-            onChange={val => setLogin('email', val)}
             placeholder='email'
+            name='email'
+            onChange={setLogin}
           />
         </div>
         <div>
@@ -72,10 +76,10 @@ function App() {
       </CustomForm >
       <CustomInput
         label='name'
-        value={info.name}
+        value={separate}
         rules={[v => Boolean(v) || 'Name is required', v => (v as string).length <= 10 || 'Max 10 characters']}
-        onChange={val => setLogin('name', val)}
         placeholder='name'
+        onChange={e => setSeparate(e.target.value)}
       />
     </div>
   )

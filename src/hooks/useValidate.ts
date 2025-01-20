@@ -1,5 +1,5 @@
 import { RenderValueType, InputProps } from '../types/formType';
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 
 export function useValidate(props: InputProps) {
   const [errorTexts, setErrorTexts ] = useState<string[]>([]);
@@ -24,14 +24,14 @@ export function useValidate(props: InputProps) {
   // Function to reset the input value
   const resetInput = () => {
     localValue.current = ''
-    props.onUpdateModelValue(''); // Reset model value
+    props.onUpdateValue({ target: { id: props.id, name: props.name, value: '' } } as ChangeEvent<HTMLInputElement>); // Reset model value
     resetInputValidate(); // Reset validation errors
   };
 
   // Function to handle input changes
-  const onInput = (newVal: RenderValueType) => {
-    localValue.current = newVal
-    props.onUpdateModelValue(newVal); // Update the model value
+  const onInput = (e: ChangeEvent<HTMLInputElement>) => {
+    localValue.current = e.target.value
+    props.onUpdateValue(e); // Update the model value
     inputValidate()
   };
 

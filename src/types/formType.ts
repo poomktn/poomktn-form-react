@@ -1,3 +1,5 @@
+import { ChangeEvent } from 'react'
+
 export interface InputValidateProps {
   inputValidate: () => { valid: boolean, errText: string }
   resetInputValidate: () => void
@@ -12,5 +14,7 @@ export type AllValueType = RenderValueType | boolean
 export interface InputProps {
   modelValue: RenderValueType;
   rules: Function[];
-  onUpdateModelValue: (value: RenderValueType) => void;
+  onUpdateValue: (value: ChangeEvent<HTMLInputElement>) => void;
+  id?: string;
+  name?: string;
 }
