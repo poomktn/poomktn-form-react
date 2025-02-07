@@ -1,5 +1,8 @@
-import { useRef } from 'react';
+import { createContext, useRef } from 'react';
 import { InputValidateProps } from '../types/formType';
+import { FormContextProps } from '../components';
+
+export const FormContext = createContext<FormContextProps>(null as unknown as FormContextProps)
 
 export function useForm() {
   const inputsRef = useRef<InputValidateProps[]>([]);
@@ -18,7 +21,7 @@ export function useForm() {
     let errorText = '';
     let isValid = true;
     inputsRef.current.forEach((input) => {
-      let { valid, errText } = input.inputValidate();
+      const { valid, errText } = input.inputValidate();
       if (!valid) {
         isValid = false;
         if (!errorText) errorText = errText;

@@ -1,2 +1,2 @@
-export { useForm } from './useForm'
-export { useValidate } from './useValidate'
+export * from './useForm'
+export * from './useValidate'

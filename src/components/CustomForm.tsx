@@ -1,10 +1,9 @@
 import {
   ReactNode,
-  createContext,
   forwardRef,
   useImperativeHandle,
 } from 'react'
-import { useForm } from '../hooks/useForm'
+import { FormContext, useForm } from '../hooks/useForm'
 import { InputValidateProps } from '../types/formType'
 
 type formProps = {
@@ -27,8 +26,6 @@ export type FormContextProps = {
   register: (input: InputValidateProps) => void,
   unregister: (input: InputValidateProps) => void
 }
-
-export const FormContext = createContext<FormContextProps>(null as unknown as FormContextProps)
 
 export const CustomForm = forwardRef<FormRefProps, formProps>(function CustomForm(
   { children, className }: formProps,

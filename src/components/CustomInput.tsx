@@ -1,6 +1,5 @@
 import { ChangeEvent, useContext, useEffect } from 'react'
-import { useValidate } from '../hooks/useValidate'
-import { FormContext } from './CustomForm'
+import { useValidate, FormContext } from '../hooks'
 import { RenderValueType, rulesProps } from '../types/formType'
 
 interface InputProps {
@@ -12,11 +11,13 @@ interface InputProps {
   showError?: boolean;
   onChange: (value: ChangeEvent<HTMLInputElement>) => void; // Equivalent to the v-model binding
   placeholder?: string
+  validateOnBlur?: boolean
+  validateOnInput?: boolean
 }
 
-export const CustomInput = ({ id, name, value, rules = [], label, showError = true, onChange, placeholder = '' }: InputProps) => {
+export const CustomInput = ({ id, name, value, rules = [], label, showError = true, onChange, placeholder = '', validateOnBlur = false, validateOnInput = true }: InputProps) => {
   const form = useContext(FormContext); // Access form context
-  const { errorTexts, inputValidate, resetInputValidate, resetInput, onInput } = useValidate({ modelValue: value, rules, onUpdateValue: onChange, id, name });
+  const { errorTexts, inputValidate, resetInputValidate, resetInput, onInput, actionOnBlur } = useValidate({ modelValue: value, rules, onUpdateValue: onChange, id, name, validateOnBlur, validateOnInput });
   // Register input when component is mounted, unregister when it's unmounted
   useEffect(() => {
     if (form) {
@@ -39,6 +40,7 @@ export const CustomInput = ({ id, name, value, rules = [], label, showError = tr
         value={value as RenderValueType}
         // onInput={(e) => onInput((e.target as HTMLInputElement).value)}
         onChange={onInput}
+        onBlur={() => actionOnBlur()}
         className={errorTexts.length > 0 ? "error" : ""}
         placeholder={placeholder}
       />

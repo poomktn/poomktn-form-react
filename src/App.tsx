@@ -5,23 +5,27 @@ import './App.css';
 interface LoginDto {
   email: string
   name: string
+  test: string
+  var: string
 }
 
 function App() {
   const formRef = useRef<FormRefProps>(null)
-  const [info, setInfo] = useState<LoginDto>({ email: '', name: '' })
+  const [info, setInfo] = useState<LoginDto>({ email: '', name: '', test: '', var: '' })
   const [separate, setSeparate] = useState<string>('')
   const [errMsg, setErrMsg] = useState('')
+  const [selectedTab, setSelectedTab] = useState(1)
 
   function setLogin(e: ChangeEvent<HTMLInputElement>) {
-    let { name, value } = e.target
-    console.log(name, value)
+    const { name, value } = e.target
     setInfo(prev => ({ ...prev, [name]: value }))
   }
 
   const submitForm = () => {
     if (formRef?.current) {
-      let { isValid, errorText } = formRef?.current.validate();
+      const form = formRef?.current
+      const { isValid, errorText } = form.validate();
+      console.log('info ', info)
       if (isValid) {
         console.log('form is right!');
         setErrMsg('form is valid!')
@@ -46,15 +50,22 @@ function App() {
     setErrMsg('')
   };
 
+  const showTab = (tab: number) => {
+    return selectedTab === tab ? '' : 'none'
+  }
+
   return (
-    <div className='m-2'>
+    <div>
+      <div onClick={() => setSelectedTab(1)}>tab 1</div>
+      <div onClick={() => setSelectedTab(2)}>tab 2</div>
+      <p>tab: {selectedTab}</p>
       <CustomForm ref={formRef}>
-        <div>
+        <div style={{ display: showTab(1)}}>
           <CustomInput
             label='Name'
             placeholder='name'
             value={info.name}
-            rules={[v => Boolean(v) || 'Name is required', v => (v as string).length <= 10 || 'Max 10 characters']}
+            rules={[v => Boolean(v) || 'Name is required', v => (v as string).length <= 10 || 'Name Max 10 characters']}
             name='name'
             onChange={setLogin}
           />
@@ -66,6 +77,26 @@ function App() {
             name='email'
             onChange={setLogin}
           />
+          </div>
+          <div style={{ display: showTab(2)}}>
+          <CustomInput
+            label='test'
+            name='test'
+            placeholder='test'
+            value={info.test}
+            rules={[v => Boolean(v) || 'test is required', v => (v as string).length <= 10 || 'test Max 10 characters']}
+            onChange={setLogin}
+            validateOnBlur
+          />
+          <CustomInput
+            label='var'
+            name='var'
+            placeholder='var'
+            value={info.var}
+            rules={[v => Boolean(v) || 'var is required', v => (v as string).length <= 10 || 'var Max 10 characters']}
+            onChange={setLogin}
+            validateOnInput={false}
+          />
         </div>
         <div>
           <p>this is {errMsg}</p>
@@ -73,13 +104,14 @@ function App() {
           <button type="button" onClick={resetAllForm}>Reset All</button>
           <button type="button" onClick={resetErrorForm}>Reset</button>
         </div >
-      </CustomForm >
+      </CustomForm>
       <CustomInput
-        label='name'
+        label='okok'
         value={separate}
         rules={[v => Boolean(v) || 'Name is required', v => (v as string).length <= 10 || 'Max 10 characters']}
-        placeholder='name'
+        placeholder='okok'
         onChange={e => setSeparate(e.target.value)}
+        validateOnBlur
       />
     </div>
   )
