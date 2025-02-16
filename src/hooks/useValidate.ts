@@ -2,13 +2,13 @@ import { RenderValueType, InputProps } from "../types/formType";
 import { ChangeEvent, useRef, useState } from "react";
 
 export function useValidate({
-  modelValue,
-  rules,
+  modelValue = '',
+  rules = [],
   onUpdateValue,
   id,
   name,
-  validateOnInput,
-  validateOnBlur,
+  validateOnInput = true,
+  validateOnBlur = false,
 }: InputProps) {
   const [errorTexts, setErrorTexts] = useState<string[]>([]);
   const localValue = useRef<RenderValueType>(modelValue);
