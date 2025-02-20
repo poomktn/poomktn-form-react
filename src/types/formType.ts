@@ -13,7 +13,7 @@ export type AllValueType = RenderValueType | boolean
 
 export interface InputProps {
   modelValue: RenderValueType;
-  rules: ((v: string | number) => boolean | string)[];
+  rules: ((v: RenderValueType) => boolean | string)[];
   onUpdateValue: (value: ChangeEvent<HTMLInputElement>) => void;
   validateOnInput: boolean;
   validateOnBlur: boolean;
