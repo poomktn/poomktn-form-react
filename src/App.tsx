@@ -56,8 +56,8 @@ function App() {
 
   return (
     <div>
-      <div onClick={() => setSelectedTab(1)}>tab 1</div>
-      <div onClick={() => setSelectedTab(2)}>tab 2</div>
+      <button onClick={() => setSelectedTab(1)}>tab 1</button>
+      <button onClick={() => setSelectedTab(2)}>tab 2</button>
       <p>tab: {selectedTab}</p>
       <CustomForm ref={formRef}>
         <div style={{ display: showTab(1)}}>
